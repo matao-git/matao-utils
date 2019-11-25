@@ -3,16 +3,27 @@ package com.matao;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+
 
 /**
- * 文件 工具�?
- * @author zhuzg
- *
+ * 
+    * @ClassName: FileUtils
+    * @Description: 文件工具类
+    * @author 马涛
+    * @date 2019年11月17日
+    *
  */
 public class FileUtils {
 	
@@ -94,8 +105,6 @@ public class FileUtils {
 	}
 	
 	/**
-	 * 
-	 * 
 	 * @return
 	 * @throws IOException 
 	 */
@@ -133,5 +142,130 @@ public class FileUtils {
 		return strList;
 		
 	} 
+	/**
+	 * 
+	 * @param 就是读取文件  然后将读取的内容返回到list集合中 直接调用修改
+	 * @return
+	 */
+	public static List<String> ReadFileByLine(String filename) {
+		List<String> list = new ArrayList<String>();
+		File file = new File(filename);
+		InputStream is = null;
+		Reader reader = null;
+		BufferedReader bufferedReader = null;
+		try {
+			is = new FileInputStream(file);
+			reader = new InputStreamReader(is);
+			bufferedReader = new BufferedReader(reader);
+			String line = null;
+			while ((line = bufferedReader.readLine()) != null) {
+			list.add(line);
+			System.out.println(line);
+			}
+			return list;
+			} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != bufferedReader)
+				bufferedReader.close();
+				if (null != reader)
+				reader.close();
+				if (null != is)
+				is.close();
+			} catch (IOException e) {
+					e.printStackTrace();
+			}
+			
+		}
+			return null;
+	}
+	/**
+	* 按字节读取文件
+	*
+	* @param filename
+	*/
+	public static void ReadFileByBytes(String filename) {
 
+	File file = new File(filename);
+
+	InputStream is = null;
+
+	try {
+
+		is = new FileInputStream(file);
+	
+		int index = 0;
+	
+		while (-1 != (index = is.read())) {
+	
+		System.out.write(index);
+		}
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+	// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		try {
+			if (null != is)
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+		System.out.println("-----------------------------------");
+		try {
+			is = new FileInputStream(file);
+			byte[] tempbyte = new byte[1000];
+			int index = 0;
+			while (-1 != (index = is.read(tempbyte))) {
+			System.out.write(tempbyte, 0, index);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != is)
+				is.close();
+				} catch (IOException e) {
+				e.printStackTrace();
+				}
+		}
+	}
+	
+	/*
+	 * @Value("${upload.path}") String uploadPath;
+	 */
+	/**
+	 * 保存文件的相对路径
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	
+	/*
+	 * private String processFile(MultipartFile file) throws IllegalStateException,
+	 * IOException { log.info("uploadPath is"+uploadPath);
+	 * 
+	 * //1.求扩展名“xxx.jsp” String suffixName =
+	 * file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('
+	 * .')); String fileNamePre = UUID.randomUUID().toString();
+	 * 
+	 * //计算出新的文件名称 String fileName = fileNamePre +suffixName;
+	 * 
+	 * SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd"); String
+	 * path =simpleDateFormat.format(new Date()); File pathFile = new
+	 * File(uploadPath+"/"+path); if(!pathFile.exists()) { pathFile.mkdirs(); }
+	 * 
+	 * //最终的新的文件名称 String newFileName = uploadPath +"/"+path+"/"+fileName;
+	 * file.transferTo(new File(newFileName));
+	 * 
+	 * return path+"/"+fileName; }
+	 */
 }

@@ -2,11 +2,13 @@ package com.matao;
 
 import java.io.Closeable;
 import java.io.IOException;
-
 /**
  * 
- * @author zhuzg
- *
+    * @ClassName: StreamUtils
+    * @Description: 流的工具类
+    * @author 马涛
+    * @date 2019年11月17日
+    *
  */
 public class StreamUtils {
 	

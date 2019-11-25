@@ -3,7 +3,16 @@ package com.matao;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.HashMap;
+import java.util.HashSet;
+/**
+ * 
+    * @ClassName: DateUtils
+    * @Description: 日期工具类
+    * @author 马涛
+    * @date 2019年11月17日
+    *
+ */
 public class DateUtils {
 	
 	public static void main(String[] args) {
@@ -27,7 +36,7 @@ public class DateUtils {
 	 * @return
 	 */
 	public static  int calAge(Date birthday) {
-		 
+		 new HashMap<>();
 		Calendar cal = Calendar.getInstance();  
 		cal.setTime(birthday);
 		//获取出生的年月日
@@ -118,5 +127,47 @@ public class DateUtils {
 		cal.add(Calendar.SECOND, -1);
 		return cal.getTime();
 	}
+	/**
+	 * 
+	 * @Title: randomDate 
+	 * @Description: TODO
+	 * @param beginDate 开始时间
+	 * @param endDate 结束时间
+	 * @return
+	 * @return: Date
+	 */
+	public static Date randomDate(String beginDate, String endDate) {  
+        try {  
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+            Date start = format.parse(beginDate);// 构造开始日期  
+            Date end = format.parse(endDate);// 构造结束日期  
+            // getTime()表示返回自 1970 年 1 月 1 日 00:00:00 GMT 以来此 Date 对象表示的毫秒数。  
+            if (start.getTime() >= end.getTime()) {  
+                return null;  
+            }  
+            long date = random(start.getTime(), end.getTime());  
 
+            return new Date(date);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        return null;  
+    }  
+	/**
+	 * 
+	 * @Title: random 
+	 * @Description: 随机生成时间
+	 * @param begin
+	 * @param end
+	 * @return
+	 * @return: long
+	 */
+    private static long random(long begin, long end) {  
+        long rtn = begin + (long) (Math.random() * (end - begin));  
+        // 如果返回的是开始时间和结束时间，则递归调用本函数查找随机值  
+        if (rtn == begin || rtn == end) {  
+            return random(begin, end);  
+        }  
+        return rtn;  
+    }  
 }
