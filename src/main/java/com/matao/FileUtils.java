@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -29,6 +30,28 @@ public class FileUtils {
 	
 	private static File file;
 
+		//上传文件
+		public static String processFile(MultipartFile file,String uploadPath) throws IllegalStateException, IOException{
+			
+			//求扩展名
+			String suffixName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
+			String fileNamePre = UUID.randomUUID().toString();
+			//新的名字
+			String fileName=fileNamePre+suffixName;
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String date = sdf.format(new Date());
+			File pathFile = new File(uploadPath+"/"+date);
+			if(!pathFile.exists()){
+				pathFile.mkdirs();
+			}
+			//最后文件名称
+			String newName=uploadPath+"/"+date+"/"+fileName;
+			file.transferTo(new File(newName));
+			//返回文件名字
+			return date+"/"+fileName;
+		}
+	
 	public static void main(String[] args) throws IOException {
 		
 		String readFileByLine = readFileByLine("D:\\1703A\\yunfu-parent\\pom.xml");
