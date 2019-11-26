@@ -15,6 +15,14 @@ import java.util.HashSet;
  */
 public class DateUtils {
 	
+	 //计算从之前日期到现在的年龄
+    public   static int countAge(Date date){
+		SimpleDateFormat sdf = new	SimpleDateFormat("yyyy");
+		int thisyear = Integer.valueOf(sdf.format(new Date()));
+		int finalyear = Integer.valueOf(sdf.format(date));
+		return thisyear-finalyear;
+	}
+	
 	public static void main(String[] args) {
 		
 		Date birth = new Date(100, 0, 6);
